@@ -13,22 +13,11 @@ use Ident\Exception\InvalidSignature;
 abstract class AbstractUuidType extends Type
 {
     /**
-     * The class name of the UuidType
+     * The class name of the UuidIdentifier type
      *
      * @return string
      */
     abstract protected function getClass();
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
-    {
-        $fieldDeclaration['fixed']  = true;
-        $fieldDeclaration['length'] = 16;
-
-        return $platform->getBinaryTypeDeclarationSQL($fieldDeclaration);
-    }
 
     /**
      * {@inheritdoc}
@@ -60,11 +49,11 @@ abstract class AbstractUuidType extends Type
         $class = $this->getClass();
 
         try {
-            $binaryUuidId = $class::fromSignature($value);
+            $uuid = $class::fromSignature($value);
         } catch (InvalidSignature $e) {
             throw ConversionException::conversionFailed($value, $this->getName());
         }
 
-        return $binaryUuidId;
+        return $uuid;
     }
 }

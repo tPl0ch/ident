@@ -12,19 +12,22 @@ abstract class AbstractUuidTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * @var mixed
      */
-    private $signature;
+    protected $signature;
 
     /**
      * @var \Ident\IdentifiesObjects
      */
-    private $identifier;
+    protected $identifier;
 
-    private $platform;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $platform;
 
     /**
      * @var \Doctrine\DBAL\Types\Type
      */
-    private $type;
+    protected $type;
 
     abstract public function instanceProvider();
 
@@ -46,6 +49,7 @@ abstract class AbstractUuidTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
             ->disableOriginalConstructor()
+            ->setMethods(['getBinaryTypeDeclarationSQL', 'getVarcharTypeDeclarationSQL'])
             ->getMockForAbstractClass();
     }
 
