@@ -8,7 +8,8 @@ build:
                 coverage:
                     file: 'coverage.xml'
                     format: 'php-clover'
-
+        before:
+            - 'composer update'
 filter:
     paths: [src/*]
     excluded_paths: [test/*, vendor/*]
