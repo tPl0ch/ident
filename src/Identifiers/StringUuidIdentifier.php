@@ -10,13 +10,8 @@ use Rhumsaa\Uuid\Uuid;
 /**
  * Class StringUuidIdentifier
  */
-class StringUuidIdentifier implements IdentifiesObjects
+class StringUuidIdentifier extends AbstractUuidIdentifier
 {
-    /**
-     * @var string
-     */
-    private $uuidString;
-
     /**
      * @param string|Uuid $uuid
      *
@@ -44,24 +39,6 @@ class StringUuidIdentifier implements IdentifiesObjects
      */
     final public function __construct(Uuid $uuid)
     {
-        $this->uuidString = (string) $uuid;
-    }
-
-    /**
-     * @return string
-     */
-    public function signature()
-    {
-        return $this->uuidString;
-    }
-
-    /**
-     * @param IdentifiesObjects $id
-     *
-     * @return bool
-     */
-    public function equals(IdentifiesObjects $id)
-    {
-        return $this->signature() === $id->signature();
+        $this->signature = (string) $uuid;
     }
 }
