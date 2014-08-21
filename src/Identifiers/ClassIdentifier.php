@@ -8,7 +8,7 @@ use Ident\IdentifiesObjects;
 /**
  * Class ClassIdentifier
  */
-abstract class ClassIdentifier implements IdentifiesObjects
+class ClassIdentifier implements IdentifiesObjects
 {
     /**
      * @var string
@@ -18,15 +18,15 @@ abstract class ClassIdentifier implements IdentifiesObjects
     /**
      * @var string
      */
-    private $className;
+    protected $className;
 
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
-     * @param mixed $signature
+     * @param string $signature
      *
      * @return IdentifiesObjects|ClassIdentifier
      *
@@ -45,7 +45,7 @@ abstract class ClassIdentifier implements IdentifiesObjects
 
     /**
      * @param string $className
-     * @param mixed  $id
+     * @param string $id
      */
     final public function __construct($className, $id)
     {
@@ -70,4 +70,4 @@ abstract class ClassIdentifier implements IdentifiesObjects
     {
         return $this->signature() === $id->signature();
     }
-} 
+}
