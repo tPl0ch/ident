@@ -60,6 +60,8 @@ abstract class AbstractUuidTypeTest extends \PHPUnit_Framework_TestCase
     {
         $signature = $this->type->convertToDatabaseValue($this->identifier, $this->platform);
         $this->assertEquals($this->signature, $signature);
+
+        $this->assertNull($this->type->convertToDatabaseValue(null, $this->platform));
     }
 
     /**
@@ -69,5 +71,27 @@ abstract class AbstractUuidTypeTest extends \PHPUnit_Framework_TestCase
     {
         $identifier = $this->type->convertToPHPValue($this->signature, $this->platform);
         $this->assertEquals($this->identifier, $identifier);
+
+        $this->assertNull($this->type->convertToPHPValue(null, $this->platform));
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Doctrine\DBAL\Types\ConversionException
+     */
+    public function shouldThrowExceptionOnInvalidPhpValue()
+    {
+        $this->type->convertToPHPValue('INVALID', $this->platform);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Doctrine\DBAL\Types\ConversionException
+     */
+    public function shouldThrowExceptionOnInvalidDbValue()
+    {
+        $this->type->convertToDatabaseValue('INVALID', $this->platform);
     }
 }
