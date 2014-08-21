@@ -38,9 +38,7 @@ abstract class AbstractUuidTypeTest extends \PHPUnit_Framework_TestCase
 
         $typeName = constant($typeClass . '::NAME');
 
-        try {
-            Type::getType($typeName);
-        } catch (\Exception $e) {
+        if (!Type::hasType($typeName)) {
             Type::addType($typeName, $typeClass);
         }
 
