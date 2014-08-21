@@ -1,7 +1,5 @@
 <?php
-/**
- * @author Thomas Ploch <thomas.ploch@meinfernbus.de>
- */
+
 namespace Ident\Identifiers;
 
 use Ident\Exception\IdentExceptions;
@@ -15,7 +13,7 @@ use Rhumsaa\Uuid\Uuid;
 abstract class BinaryUuidIdentifier implements IdentifiesObjects
 {
     /**
-     * @var Uuid
+     * @var string
      */
     private $uuid;
 

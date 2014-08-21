@@ -15,7 +15,7 @@ use Rhumsaa\Uuid\Uuid;
 abstract class StringUuidIdentifier implements IdentifiesObjects
 {
     /**
-     * @var Uuid
+     * @var string
      */
     private $uuid;
 
