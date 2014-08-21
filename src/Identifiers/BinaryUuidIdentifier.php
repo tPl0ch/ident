@@ -10,12 +10,12 @@ use Rhumsaa\Uuid\Uuid;
 /**
  * Class BinaryUuidIdentifier
  */
-abstract class BinaryUuidIdentifier implements IdentifiesObjects
+class BinaryUuidIdentifier implements IdentifiesObjects
 {
     /**
      * @var string
      */
-    private $uuid;
+    private $uuidBinaryString;
 
     /**
      * @param string|Uuid $uuid
@@ -44,7 +44,7 @@ abstract class BinaryUuidIdentifier implements IdentifiesObjects
      */
     final public function __construct(Uuid $uuid)
     {
-        $this->uuid = $uuid->getBytes();
+        $this->uuidBinaryString = $uuid->getBytes();
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class BinaryUuidIdentifier implements IdentifiesObjects
      */
     public function signature()
     {
-        return $this->uuid;
+        return $this->uuidBinaryString;
     }
 
     /**
@@ -63,5 +63,13 @@ abstract class BinaryUuidIdentifier implements IdentifiesObjects
     public function equals(IdentifiesObjects $id)
     {
         return $this->signature() === $id->signature();
+    }
+
+    /**
+     * @return string
+     */
+    final public function toHex()
+    {
+        return bin2hex($this->uuidBinaryString);
     }
 }

@@ -1,7 +1,5 @@
 <?php
-/**
- * @author Thomas Ploch <thomas.ploch@meinfernbus.de>
- */
+
 namespace Ident\Identifiers;
 
 use Ident\Exception\IdentExceptions;
@@ -12,12 +10,12 @@ use Rhumsaa\Uuid\Uuid;
 /**
  * Class StringUuidIdentifier
  */
-abstract class StringUuidIdentifier implements IdentifiesObjects
+class StringUuidIdentifier implements IdentifiesObjects
 {
     /**
      * @var string
      */
-    private $uuid;
+    private $uuidString;
 
     /**
      * @param string|Uuid $uuid
@@ -46,7 +44,7 @@ abstract class StringUuidIdentifier implements IdentifiesObjects
      */
     final public function __construct(Uuid $uuid)
     {
-        $this->uuid = (string) $uuid;
+        $this->uuidString = (string) $uuid;
     }
 
     /**
@@ -54,7 +52,7 @@ abstract class StringUuidIdentifier implements IdentifiesObjects
      */
     public function signature()
     {
-        return $this->uuid;
+        return $this->uuidString;
     }
 
     /**

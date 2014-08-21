@@ -2,64 +2,22 @@
 
 namespace Ident\Doctrine;
 
-use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\Type;
-
-use Ident\Exception\InvalidSignature;
-use Ident\Identifiers\BinaryUuidIdentifier;
-
 /**
  * Class BinaryUuidType
  */
-class BinaryUuidType extends Type
+class BinaryUuidType extends AbstractUuidType
 {
     /** @var string */
     const NAME = 'uuid_binary';
 
     /**
-     * {@inheritdoc}
+     * The class name of the UuidType
+     *
+     * @return string
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    protected function getClass()
     {
-        $fieldDeclaration['fixed']  = true;
-        $fieldDeclaration['length'] = 16;
-
-        return $platform->getBinaryTypeDeclarationSQL($fieldDeclaration);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
-    {
-        if (empty($value)) {
-            return null;
-        }
-
-        if (!$value instanceof BinaryUuidIdentifier) {
-            throw ConversionException::conversionFailed($value, self::NAME);
-        }
-
-        return $value->signature();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
-        if (empty($value)) {
-            return null;
-        }
-
-        try {
-            $binaryUuidId = BinaryUuidIdentifier::fromSignature($value);
-        } catch (InvalidSignature $e) {
-            throw ConversionException::conversionFailed($value, self::NAME);
-        }
-
-        return $binaryUuidId;
+        return 'Ident\Identifiers\BinaryUuidIdentifier';
     }
 
     /**
