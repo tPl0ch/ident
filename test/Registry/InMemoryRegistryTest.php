@@ -155,6 +155,12 @@ class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Iterator', $all);
         $this->assertCount(2, $all);
+
+        // check that resetting array mode works
+        $all = $this->registry->asArray()->asIterator()->all();
+
+        $this->assertInstanceOf('\Iterator', $all);
+        $this->assertCount(2, $all);
     }
 
     /**
@@ -171,5 +177,15 @@ class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
         $this->assertNotInstanceOf('\Iterator', $all);
         $this->assertSame($this->payment, $all[0]);
         $this->assertSame($this->order, $all[1]);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Ident\Exception\IdentityNotFound
+     */
+    public function shouldThrowExceptionWhenIdentityIsNotFound()
+    {
+        $this->registry->get($this->order->getIdentifier());
     }
 }

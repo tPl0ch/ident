@@ -46,6 +46,13 @@ interface RegistersIdentities
     public function clear();
 
     /**
+     * @param callable $callable
+     *
+     * @return void
+     */
+    public function map(Callable $callable);
+
+    /**
      * @param IdentifiesObjects $id
      *
      * @return bool
