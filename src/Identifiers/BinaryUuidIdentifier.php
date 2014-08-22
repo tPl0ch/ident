@@ -32,20 +32,20 @@ class BinaryUuidIdentifier extends AbstractUuidIdentifier
     }
 
     /**
-     * @param Uuid $uuid
-     *
-     * @throws \Ident\Exception\InvalidSignature
-     */
-    final public function __construct(Uuid $uuid)
-    {
-        $this->signature = $uuid->getBytes();
-    }
-
-    /**
      * @return string
      */
     final public function toHex()
     {
         return bin2hex($this->signature);
+    }
+
+    /**
+     * @param Uuid $uuid
+     *
+     * @return void
+     */
+    protected function extractSignature(Uuid $uuid)
+    {
+        $this->signature = $uuid->getBytes();
     }
 }

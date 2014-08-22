@@ -1,6 +1,6 @@
 <?php
 
-namespace Ident\Doctrine;
+namespace Ident\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;

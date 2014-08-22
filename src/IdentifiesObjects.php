@@ -8,13 +8,6 @@ namespace Ident;
 interface IdentifiesObjects
 {
     /**
-     * @param object|null $objectToIdentify
-     *
-     * @return IdentifiesObjects
-     */
-    public static function create($objectToIdentify = null);
-
-    /**
      * @param mixed $signature
      *
      * @return IdentifiesObjects

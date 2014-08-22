@@ -2,6 +2,7 @@
 
 namespace Ident\Identifiers;
 
+use Ident\Factory\UuidIdentifierFactory;
 use Ident\IdentifiesObjects;
 use Rhumsaa\Uuid\Uuid;
 
@@ -16,13 +17,45 @@ abstract class AbstractUuidIdentifier implements IdentifiesObjects
     protected $signature;
 
     /**
-     * @param object $object
-     *
-     * @return static
+     * @var UuidIdentifierFactory
      */
-    final public static function create($object = null)
+    private static $factory;
+
+    /**
+     * @return UuidIdentifierFactory
+     */
+    private static function factory()
     {
-        return new static(Uuid::uuid4());
+        if (!self::$factory) {
+            self::$factory = new UuidIdentifierFactory();
+        }
+
+        return self::$factory;
+    }
+
+    /**
+     * @return IdentifiesObjects
+     */
+    final public static function create()
+    {
+        return self::factory()->identify(static::class);
+    }
+
+    /**
+     * @param Uuid $uuid
+     *
+     * @return void
+     */
+    abstract protected function extractSignature(Uuid $uuid);
+
+    /**
+     * @param Uuid $uuid
+     *
+     * @throws \Ident\Exception\InvalidSignature
+     */
+    final public function __construct(Uuid $uuid)
+    {
+        $this->extractSignature($uuid);
     }
 
     /**

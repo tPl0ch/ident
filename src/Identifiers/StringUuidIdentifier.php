@@ -34,9 +34,9 @@ class StringUuidIdentifier extends AbstractUuidIdentifier
     /**
      * @param Uuid $uuid
      *
-     * @throws \Ident\Exception\InvalidSignature
+     * @return void
      */
-    final public function __construct(Uuid $uuid)
+    protected function extractSignature(Uuid $uuid)
     {
         $this->signature = (string) $uuid;
     }

@@ -13,7 +13,7 @@ class StringUuidTypeTest extends AbstractUuidTypeTest
     public function instanceProvider()
     {
         return [
-            'Ident\Doctrine\StringUuidType',
+            'Ident\Doctrine\Type\StringUuidType',
             'Ident\Identifiers\StringUuidIdentifier',
             '62e1a130-7ac0-4486-8756-ccd2a108eb4a'
         ];
