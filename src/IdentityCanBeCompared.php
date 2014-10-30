@@ -3,7 +3,7 @@
 namespace Ident;
 
 /**
- * Interface CanBeCompared
+ * Interface IdentityCanBeCompared
  */
 interface IdentityCanBeCompared
 {
