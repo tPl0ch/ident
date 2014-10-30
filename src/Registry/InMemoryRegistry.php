@@ -45,7 +45,7 @@ class InMemoryRegistry implements RegistersIdentities
                     throw IdentExceptions::identityAlreadyRegistered();
                 }
 
-                return false;
+                return true;
             },
             $this->map
         );

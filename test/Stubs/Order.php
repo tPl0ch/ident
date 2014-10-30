@@ -40,7 +40,7 @@ class Order implements HasIdentity
      */
     public function __construct(IdentifiesObjects $orderId)
     {
-        $this->id = $orderId;
+        $this->identifier = $orderId;
         $this->value = 0;
     }
     /**
@@ -58,7 +58,7 @@ class Order implements HasIdentity
      */
     public function equals(HasIdentity $identity)
     {
-        return $this->id->equals($identity->getIdentifier());
+        return $this->identifier->equals($identity->getIdentifier());
     }
 
     /**

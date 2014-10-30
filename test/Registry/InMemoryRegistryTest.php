@@ -2,7 +2,6 @@
 
 namespace Ident\Test\Registry;
 
-use Ident\Exception\IdentExceptions;
 use Ident\Registry\InMemoryRegistry;
 use Ident\Test\Stubs\Order;
 use Ident\Test\Stubs\OrderId;
