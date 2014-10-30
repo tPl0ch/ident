@@ -1,7 +1,5 @@
 <?php
-/**
- * @author Thomas Ploch <thomas.ploch@meinfernbus.de>
- */
+
 namespace Ident\Traits;
 
 use Ident\IdentifiesObjects;

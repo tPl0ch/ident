@@ -5,7 +5,7 @@ namespace Ident;
 /**
  * Interface IdentifiesObjects
  */
-interface IdentifiesObjects
+interface IdentifiesObjects extends IdentityCanBeCompared
 {
     /**
      * @param mixed $signature
@@ -20,11 +20,4 @@ interface IdentifiesObjects
      * @return mixed
      */
     public function signature();
-
-    /**
-     * @param IdentifiesObjects $id
-     *
-     * @return bool
-     */
-    public function equals(IdentifiesObjects $id);
 }

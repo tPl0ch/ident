@@ -3,7 +3,6 @@
 namespace Ident\Test\Stubs;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ident\Doctrine\Mapping\Annotation as Ident;
 use Ident\HasIdentity;
 use Ident\IdentifiesObjects;
 
@@ -19,7 +18,6 @@ class Payment implements HasIdentity
      *
      * @ORM\Column(type="uuid_string")
      * @ORM\Id()
-     * @Ident\IdType(idClass="Ident\Test\Stubs\PaymentId")
      */
     private $id;
 

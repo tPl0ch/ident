@@ -3,7 +3,6 @@
 namespace Ident\Test\Stubs;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ident\Doctrine\Mapping\Annotation as Ident;
 use Ident\HasIdentity;
 use Ident\IdentifiesObjects;
 
@@ -19,7 +18,6 @@ class Order implements HasIdentity
      *
      * @ORM\Id()
      * @ORM\Column(type="uuid_binary")
-     * @Ident\IdType(idClass="Ident\Test\Stubs\OrderId")
      */
     private $identifier;
 
