@@ -68,25 +68,6 @@ class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldGuardWrongTypes()
-    {
-        $this->registry = new InMemoryRegistry(
-            function ($identity) {
-                if (!$identity instanceof Order) {
-                    throw IdentExceptions::typeNotAllowed();
-                }
-            }
-        );
-
-        $this->registry->add($this->order);
-
-        $this->setExpectedException('\Ident\Exception\TypeNotAllowed');
-        $this->registry->add($this->payment);
-    }
-
-    /**
-     * @test
-     */
     public function shouldRemoveIdentities()
     {
         $this->registry->add($this->payment);

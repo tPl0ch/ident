@@ -12,6 +12,9 @@ class StringUuidType extends AbstractUuidType
     /** @var string */
     const NAME = 'uuid_string';
 
+    /** @var string */
+    const DEFAULT_CLASS = 'Ident\Identifiers\StringUuidIdentifier';
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +33,7 @@ class StringUuidType extends AbstractUuidType
      */
     protected function getClass()
     {
-        return 'Ident\Identifiers\StringUuidIdentifier';
+        return static::DEFAULT_CLASS;
     }
 
     /**

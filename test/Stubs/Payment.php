@@ -2,30 +2,40 @@
 
 namespace Ident\Test\Stubs;
 
+use Doctrine\ORM\Mapping as ORM;
+use Ident\Doctrine\Mapping\Annotation as Ident;
 use Ident\HasIdentity;
+use Ident\IdentifiesObjects;
 
 /**
  * Class Payment
+ *
+ * @ORM\Entity()
  */
 class Payment implements HasIdentity
 {
     /**
      * @var PaymentId
+     *
+     * @ORM\Column(type="uuid_string")
+     * @ORM\Id()
+     * @Ident\IdType(idClass="Ident\Test\Stubs\PaymentId")
      */
     private $id;
 
     /**
      * @var bool
+     *
+     * @ORM\Column(type="boolean", options={default="0"})
      */
-    private $processed;
+    private $processed = false;
 
     /**
-     * @param PaymentId $id
+     * @param IdentifiesObjects $id
      */
-    public function __construct(PaymentId $id)
+    public function __construct(IdentifiesObjects $id)
     {
         $this->id = $id;
-        $this->processed = false;
     }
 
     /**

@@ -19,22 +19,16 @@ class InMemoryRegistry implements RegistersIdentities
     protected $map;
 
     /**
-     * @var callable|null
-     */
-    protected $guard;
-
-    /**
      * @var bool
      */
     protected $asArray = false;
 
     /**
-     * @param callable|null $guard
+     * Constructor
      */
-    public function __construct(Callable $guard = null)
+    public function __construct()
     {
         $this->map = new \SplObjectStorage();
-        $this->guard = $guard;
     }
 
     /**
@@ -55,10 +49,6 @@ class InMemoryRegistry implements RegistersIdentities
             },
             $this->map
         );
-
-        if ($this->hasGuard()) {
-            call_user_func($this->guard, $identity);
-        }
 
         $this->map->attach($identity->getIdentifier(), $identity);
     }
@@ -172,14 +162,6 @@ class InMemoryRegistry implements RegistersIdentities
         $this->asArray = false;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function hasGuard()
-    {
-        return $this->guard !== null;
     }
 
     /**

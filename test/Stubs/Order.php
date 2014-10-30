@@ -2,27 +2,43 @@
 
 namespace Ident\Test\Stubs;
 
+use Doctrine\ORM\Mapping as ORM;
+use Ident\Doctrine\Mapping\Annotation as Ident;
 use Ident\HasIdentity;
+use Ident\IdentifiesObjects;
 
 /**
  * Class Order
+ *
+ * @ORM\Entity()
  */
 class Order implements HasIdentity
 {
     /**
      * @var OrderId
+     *
+     * @ORM\Id()
+     * @ORM\Column(type="uuid_binary")
+     * @Ident\IdType(idClass="Ident\Test\Stubs\OrderId")
      */
-    private $id;
+    private $identifier;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer", options={default="0"})
      */
     private $value;
 
     /**
-     * @param OrderId $orderId
+     * @var Payment
      */
-    public function __construct(OrderId $orderId)
+    private $payment;
+
+    /**
+     * @param IdentifiesObjects $orderId
+     */
+    public function __construct(IdentifiesObjects $orderId)
     {
         $this->id = $orderId;
         $this->value = 0;
@@ -32,7 +48,7 @@ class Order implements HasIdentity
      */
     public function getIdentifier()
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     /**
@@ -59,5 +75,13 @@ class Order implements HasIdentity
     public function value()
     {
         return $this->value;
+    }
+
+    /**
+     * @param Payment $payment
+     */
+    public function setPayment(Payment $payment)
+    {
+        $this->payment = $payment;
     }
 }

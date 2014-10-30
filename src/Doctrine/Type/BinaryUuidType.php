@@ -12,6 +12,9 @@ class BinaryUuidType extends AbstractUuidType
     /** @var string */
     const NAME = 'uuid_binary';
 
+    /** @var string */
+    const DEFAULT_CLASS = 'Ident\Identifiers\BinaryUuidIdentifier';
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +33,7 @@ class BinaryUuidType extends AbstractUuidType
      */
     protected function getClass()
     {
-        return 'Ident\Identifiers\BinaryUuidIdentifier';
+        return static::DEFAULT_CLASS;
     }
 
     /**
