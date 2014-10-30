@@ -14,10 +14,12 @@ use Doctrine\Common\Annotations\Annotation;
  */
 final class IdType extends Annotation
 {
+    const DEFAULT_CLASS = '/Ident/Identifiers/ClassIdCompoundIdentifier';
+
     /**
      * @var string
      */
-    public $idClass;
+    public $idClass = self::DEFAULT_CLASS;
 
     /**
      * @var string|array

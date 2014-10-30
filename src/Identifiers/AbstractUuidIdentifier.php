@@ -4,6 +4,7 @@ namespace Ident\Identifiers;
 
 use Ident\Factory\UuidIdentifierFactory;
 use Ident\IdentifiesObjects;
+use Ident\Traits\Identifier;
 use Rhumsaa\Uuid\Uuid;
 
 /**
@@ -11,10 +12,7 @@ use Rhumsaa\Uuid\Uuid;
  */
 abstract class AbstractUuidIdentifier implements IdentifiesObjects
 {
-    /**
-     * @var mixed
-     */
-    protected $signature;
+    use Identifier;
 
     /**
      * @var UuidIdentifierFactory
@@ -56,23 +54,5 @@ abstract class AbstractUuidIdentifier implements IdentifiesObjects
     final public function __construct(Uuid $uuid)
     {
         $this->extractSignature($uuid);
-    }
-
-    /**
-     * @param IdentifiesObjects $id
-     *
-     * @return bool
-     */
-    final public function equals(IdentifiesObjects $id)
-    {
-        return $this->signature() === $id->signature();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function signature()
-    {
-        return $this->signature;
     }
 }
