@@ -22,7 +22,7 @@ class UuidIdentifierFactory implements CreatesIdentities
     public function identify($class = null)
     {
         if (!$class) {
-            $class = self::DEFAULT_CLASS;
+            $class = static::DEFAULT_CLASS;
         }
 
         if (!class_exists($class)) {
@@ -30,8 +30,8 @@ class UuidIdentifierFactory implements CreatesIdentities
         }
 
         $refClass = new \ReflectionClass($class);
-        if (!$refClass->isSubclassOf(self::BASE_CLASS)) {
-            $baseClass = self::BASE_CLASS;
+        if (!$refClass->isSubclassOf(static::BASE_CLASS)) {
+            $baseClass = static::BASE_CLASS;
 
             throw new \InvalidArgumentException("Class '$class' must be a subclass of '$baseClass'");
         }
