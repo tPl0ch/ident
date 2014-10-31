@@ -2,8 +2,6 @@
 
 namespace Ident\Identifiers;
 
-use Ident\Exception\IdentExceptions;
-use Ident\IdentifiesObjects;
 use Rhumsaa\Uuid\Uuid;
 
 /**

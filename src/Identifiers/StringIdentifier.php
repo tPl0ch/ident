@@ -54,7 +54,7 @@ class StringIdentifier implements IdentifiesObjects
     /**
      * This method returns a unique identity representation
      *
-     * @return mixed
+     * @return string
      */
     public function signature()
     {
