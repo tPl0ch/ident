@@ -8,7 +8,11 @@ namespace Ident;
 interface CreatesIdentities
 {
     /**
+     * @param mixed $context
+     *
      * @return \Ident\IdentifiesObjects
+     *
+     * @throws \Ident\Exception\ClassNotMappableException
      */
-    public function identify();
+    public function identify($context);
 }

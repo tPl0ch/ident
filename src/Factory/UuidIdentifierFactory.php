@@ -3,6 +3,7 @@
 namespace Ident\Factory;
 
 use Ident\CreatesIdentities;
+use Ident\MapsClassToIdentity;
 use Rhumsaa\Uuid\Uuid;
 
 /**
@@ -10,79 +11,34 @@ use Rhumsaa\Uuid\Uuid;
  */
 class UuidIdentifierFactory implements CreatesIdentities
 {
-    /** @var string */
-    const DEFAULT_CLASS = '\Ident\Identifiers\StringUuidIdentifier';
+    /**
+     * @var MapsClassToIdentity
+     */
+    protected $identityMapper;
 
     /**
-     * @var string
+     * @param MapsClassToIdentity $identityMapper
      */
-    protected $class;
-
-    /**
-     * @var string
-     */
-    protected $baseClass;
-
-    /**
-     * @param string|null $class
-     * @param string|null $baseClass
-     */
-    public function __construct($class = null, $baseClass = null)
+    public function __construct(MapsClassToIdentity $identityMapper)
     {
-        if (!$class) {
-            $class = static::DEFAULT_CLASS;
-        }
-
-        $this->validateClass($class);
-        if ($baseClass) {
-            $this->validateClass($baseClass);
-        }
-
-        $this->class = $class;
-        $this->baseClass = $baseClass;
+        $this->identityMapper = $identityMapper;
     }
 
     /**
+     * @param mixed|null $context
+     *
      * @return \Ident\IdentifiesObjects
      */
-    public function identify()
+    public function identify($context)
     {
-        $class = $this->class;
-
-        if ($this->baseClass) {
-            $refClass = new \ReflectionClass($class);
-            if (!$refClass->isSubclassOf($this->baseClass)) {
-                $baseClass = $this->baseClass;
-
-                throw new \InvalidArgumentException("Class '{$this->class}' must be a subclass of '$baseClass'");
-            }
-            unset($refClass);
+        if (is_object($context)) {
+            $class = get_class($context);
+        } else {
+            $class = (string) $context;
         }
 
-        return new $class(Uuid::uuid4());
-    }
+        $identityClass = $this->identityMapper->map($class);
 
-    /**
-     * @param string $class
-     *
-     * @return $this
-     */
-    public function setClass($class)
-    {
-        $this->validateClass($class);
-
-        $this->class = (string) $class;
-
-        return $this;
-    }
-
-    /**
-     * @param string $class
-     */
-    protected function validateClass($class)
-    {
-        if (!class_exists($class)) {
-            throw new \InvalidArgumentException("Class '$class' not found or could not be autoloaded");
-        }
+        return new $identityClass(Uuid::uuid4());
     }
 }

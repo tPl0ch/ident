@@ -38,4 +38,28 @@ final class IdentExceptions
     {
         return new TypeNotAllowed();
     }
+
+    /**
+     * @return ClassNotMappableException
+     */
+    public static function classNotMappable()
+    {
+        return new ClassNotMappableException();
+    }
+
+    /**
+     * @return ClassNotFoundException
+     */
+    public static function classNotFound()
+    {
+        return new ClassNotFoundException();
+    }
+
+    /**
+     * @return ClassAlreadyMappedException
+     */
+    public static function classAlreadyMapped()
+    {
+        return new ClassAlreadyMappedException();
+    }
 }
