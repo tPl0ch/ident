@@ -45,7 +45,7 @@ class StringIdentifier implements IdentifiesObjects
         $signature = (string) $signature;
 
         if (!is_string($signature)) {
-            throw IdentExceptions::invalidSignature();
+            throw IdentExceptions::invalidSignature($signature);
         }
 
         return new static($signature);

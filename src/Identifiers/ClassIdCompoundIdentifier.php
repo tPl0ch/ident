@@ -41,7 +41,7 @@ class ClassIdCompoundIdentifier
         $signatureArray = explode(static::SEPARATOR, $signature);
 
         if (count($signatureArray) !== 2) {
-            throw IdentExceptions::invalidSignature();
+            throw IdentExceptions::invalidSignature($signature);
         }
 
         return new static($signatureArray[0], $signatureArray[1]);
