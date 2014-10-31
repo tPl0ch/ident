@@ -67,6 +67,20 @@ class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldNotThrowExceptionOnDuplicateIdentitiesNotStrict()
+    {
+        $this->registry = new InMemoryRegistry(false);
+
+        $this->registry->add($this->order);
+        $this->registry->add($this->payment);
+        $this->registry->add($this->order);
+
+        $this->assertCount(2, $this->registry->asArray()->all());
+    }
+
+    /**
+     * @test
+     */
     public function shouldRemoveIdentities()
     {
         $this->registry->add($this->payment);

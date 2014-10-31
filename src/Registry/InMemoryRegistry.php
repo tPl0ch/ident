@@ -19,15 +19,21 @@ class InMemoryRegistry implements RegistersIdentities
     protected $map;
 
     /**
+     * @var boolean
+     */
+    protected $strict;
+
+    /**
      * @var bool
      */
     protected $asArray = false;
 
     /**
-     * Constructor
+     * @param bool $strict
      */
-    public function __construct()
+    public function __construct($strict = true)
     {
+        $this->strict = (bool) $strict;
         $this->map = new \SplObjectStorage();
     }
 
@@ -38,6 +44,12 @@ class InMemoryRegistry implements RegistersIdentities
      */
     public function add(HasIdentity $identity)
     {
+        if (!$this->strict) {
+            $this->map->attach($identity->getIdentifier(), $identity);
+
+            return;
+        }
+
         iter\any(
             function ($item) use ($identity) {
                 /** @var IdentifiesObjects $item */
