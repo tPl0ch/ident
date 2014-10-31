@@ -40,4 +40,12 @@ class StringUuidIdentifier extends AbstractUuidIdentifier
     {
         $this->signature = (string) $uuid;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdValue()
+    {
+        return $this->signature;
+    }
 }

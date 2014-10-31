@@ -12,6 +12,11 @@ use Rhumsaa\Uuid\Uuid;
 class BinaryUuidIdentifier extends AbstractUuidIdentifier
 {
     /**
+     * @var string
+     */
+    protected $idValue;
+
+    /**
      * @param string|Uuid $uuid
      *
      * @return BinaryUuidIdentifier|IdentifiesObjects
@@ -47,5 +52,14 @@ class BinaryUuidIdentifier extends AbstractUuidIdentifier
     protected function extractSignature(Uuid $uuid)
     {
         $this->signature = $uuid->getBytes();
+        $this->idValue   = $uuid->toString();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdValue()
+    {
+        return $this->idValue;
     }
 }

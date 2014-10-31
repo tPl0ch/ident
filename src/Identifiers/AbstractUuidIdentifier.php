@@ -3,6 +3,7 @@
 namespace Ident\Identifiers;
 
 use Ident\Factory\UuidIdentifierFactory;
+use Ident\HasScalarId;
 use Ident\IdentifiesObjects;
 use Ident\Traits\Identifier;
 use Rhumsaa\Uuid\Uuid;
@@ -10,7 +11,8 @@ use Rhumsaa\Uuid\Uuid;
 /**
  * Class AbstractUuidIdentifier
  */
-abstract class AbstractUuidIdentifier implements IdentifiesObjects
+abstract class AbstractUuidIdentifier
+    implements IdentifiesObjects, HasScalarId
 {
     use Identifier;
 
