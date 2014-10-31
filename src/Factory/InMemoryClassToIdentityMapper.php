@@ -139,8 +139,8 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
     }
 
     /**
-     * @param $className
-     * @param $identityClass
+     * @param string $className
+     * @param string $identityClass
      */
     private function addMapAndIncrement($className, $identityClass)
     {
