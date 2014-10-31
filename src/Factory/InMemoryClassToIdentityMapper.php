@@ -80,12 +80,7 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
             return;
         }
 
-        end($this->identityClasses);
-        $key = key($this->identityClasses) + 1;
-
-        $this->identityClasses[$key] = $identityClass;
-        $this->classes[$className] = $key;
-        $this->classIdentityMap[$identityClass] = 1;
+        $this->addMapAndIncrement($className, $identityClass);
     }
 
     /**
@@ -141,5 +136,19 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
         if (!$refClass->implementsInterface($interface)) {
             throw IdentExceptions::typeNotAllowed();
         }
+    }
+
+    /**
+     * @param $className
+     * @param $identityClass
+     */
+    private function addMapAndIncrement($className, $identityClass)
+    {
+        end($this->identityClasses);
+        $key = key($this->identityClasses) + 1;
+
+        $this->identityClasses[$key]            = $identityClass;
+        $this->classes[$className]              = $key;
+        $this->classIdentityMap[$identityClass] = 1;
     }
 }
