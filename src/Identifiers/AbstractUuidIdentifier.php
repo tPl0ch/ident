@@ -27,7 +27,7 @@ abstract class AbstractUuidIdentifier
     private static function factory()
     {
         if (!self::$factory) {
-            self::$factory = new UuidIdentifierFactory(static::class);
+            self::$factory = new UuidIdentifierFactory(static::class, self::class);
         }
 
         return self::$factory;
