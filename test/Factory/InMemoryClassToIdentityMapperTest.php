@@ -90,6 +90,32 @@ class InMemoryClassToIdentityMapperTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      *
+     * @expectedException \Ident\Exception\ClassNotMappableException
+     */
+    public function shouldRemoveMappedClass()
+    {
+        $this->mapper->register(
+            'Ident\Test\Stubs\Order',
+            'Ident\Test\Stubs\OrderId'
+        );
+
+        $this->mapper->register(
+            'Ident\Test\Stubs\Payment',
+            'Ident\Test\Stubs\PaymentId'
+        );
+
+        $this->assertEquals('Ident\Test\Stubs\OrderId', $this->mapper->map('Ident\Test\Stubs\Order'));
+        $this->assertEquals('Ident\Test\Stubs\PaymentId', $this->mapper->map('Ident\Test\Stubs\Payment'));
+
+        $this->mapper->remove('Ident\Test\Stubs\Order');
+        $this->assertEquals('Ident\Test\Stubs\OrderId', $this->mapper->map('Ident\Test\Stubs\Order'));
+
+        $this->mapper->map('Ident\Test\Stubs\Payment');
+    }
+
+    /**
+     * @test
+     *
      * @expectedException \Ident\Exception\ClassNotFoundException
      */
     public function shouldThrowExceptionOnInvalidIdentityClass()
