@@ -45,7 +45,7 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
     public function map($className)
     {
         if (!isset($this->classes[$className])) {
-            throw IdentExceptions::classNotMappable();
+            throw IdentExceptions::classNotMappable($className);
         }
 
         return $this->identityClasses[$this->classes[$className]];
@@ -64,7 +64,7 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
         $className = (string) $className;
 
         if (isset($this->classes[$className])) {
-            throw IdentExceptions::classAlreadyMapped();
+            throw IdentExceptions::classAlreadyMapped($className);
         }
 
         $identityClass = (string) $identityClass;
@@ -130,11 +130,11 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
         try {
             $refClass = new \ReflectionClass($class);
         } catch (\ReflectionException $e) {
-            throw IdentExceptions::classNotFound();
+            throw IdentExceptions::classNotFound($class);
         }
 
         if (!$refClass->implementsInterface($interface)) {
-            throw IdentExceptions::typeNotAllowed();
+            throw IdentExceptions::typeNotAllowed($class);
         }
     }
 

@@ -33,7 +33,7 @@ abstract class AbstractUuidIdentifier
             try {
                 $uuid = call_user_func($converter, (string) $uuid);
             } catch (\Exception $e) {
-                throw IdentExceptions::invalidSignature();
+                throw IdentExceptions::invalidSignature((string) $uuid);
             }
         }
 

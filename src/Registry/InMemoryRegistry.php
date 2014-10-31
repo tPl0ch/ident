@@ -54,7 +54,7 @@ class InMemoryRegistry implements RegistersIdentities
             function ($item) use ($identity) {
                 /** @var IdentifiesObjects $item */
                 if ($item->equals($identity->getIdentifier())) {
-                    throw IdentExceptions::identityAlreadyRegistered();
+                    throw IdentExceptions::identityAlreadyRegistered($identity);
                 }
 
                 return true;
@@ -94,7 +94,7 @@ class InMemoryRegistry implements RegistersIdentities
     public function get(IdentifiesObjects $id)
     {
         if (!$this->map->contains($id)) {
-            throw IdentExceptions::identityNotFound();
+            throw IdentExceptions::identityNotFound($id);
         }
 
         return $this->map[$id];

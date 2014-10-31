@@ -8,9 +8,7 @@ use Ident\Factory\UuidIdentifierFactory;
 use Ident\HasIdentity;
 use Ident\Registry\Decorator\GuardedRegistry;
 use Ident\Test\Stubs\Order;
-use Ident\Test\Stubs\OrderId;
 use Ident\Test\Stubs\Payment;
-use Ident\Test\Stubs\PaymentId;
 
 /**
  * Class GuardedRegistryTest
@@ -49,7 +47,7 @@ class GuardedRegistryTest extends \PHPUnit_Framework_TestCase
             $this->registryMock,
             function (HasIdentity $identity) {
                 if (!$identity instanceof Order) {
-                    throw IdentExceptions::typeNotAllowed();
+                    throw IdentExceptions::typeNotAllowed($identity);
                 }
             }
         );
