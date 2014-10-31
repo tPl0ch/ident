@@ -2,11 +2,11 @@
 
 namespace Ident\Test\Stubs;
 
-use Ident\Identifiers\StringUuidIdentifier;
+use Ident\Identifiers\UuidIdentifier;
 
 /**
  * Class OrderId
  */
-class OrderId extends StringUuidIdentifier
+class OrderId extends UuidIdentifier
 {
 }

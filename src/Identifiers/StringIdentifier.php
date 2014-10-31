@@ -16,6 +16,16 @@ class StringIdentifier implements IdentifiesObjects
     protected $identifier;
 
     /**
+     * @param string $id
+     *
+     * @return static
+     */
+    public static function create($id)
+    {
+        return new static($id);
+    }
+
+    /**
      * @param string $identifier
      */
     final public function __construct($identifier)

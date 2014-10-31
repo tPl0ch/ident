@@ -5,15 +5,15 @@ namespace Ident\Doctrine\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
- * Class StringUuidType
+ * Class UuidType
  */
-class StringUuidType extends AbstractUuidType
+class UuidType extends AbstractUuidType
 {
     /** @var string */
-    const NAME = 'uuid_string';
+    const NAME = 'uuid';
 
     /** @var string */
-    const DEFAULT_CLASS = 'Ident\Identifiers\StringUuidIdentifier';
+    const DEFAULT_CLASS = 'Ident\Identifiers\UuidIdentifier';
 
     /**
      * {@inheritdoc}

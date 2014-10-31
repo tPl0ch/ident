@@ -9,12 +9,12 @@ use Rhumsaa\Uuid\Uuid;
 /**
  * Class StringUuidIdentifier
  */
-class StringUuidIdentifier extends AbstractUuidIdentifier
+class UuidIdentifier extends AbstractUuidIdentifier
 {
     /**
      * @param string|Uuid $uuid
      *
-     * @return StringUuidIdentifier|IdentifiesObjects
+     * @return UuidIdentifier|IdentifiesObjects
      *
      * @throws \Ident\Exception\InvalidSignature
      */

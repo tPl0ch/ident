@@ -3,9 +3,9 @@
 namespace Ident\Test\Doctrine;
 
 /**
- * Class StringUuidTypeTest
+ * Class UuidTypeTest
  */
-class StringUuidTypeTest extends AbstractUuidTypeTest
+class UuidTypeTest extends AbstractUuidTypeTest
 {
     /**
      * @return string
@@ -13,8 +13,8 @@ class StringUuidTypeTest extends AbstractUuidTypeTest
     public function instanceProvider()
     {
         return [
-            'Ident\Doctrine\Type\StringUuidType',
-            'Ident\Identifiers\StringUuidIdentifier',
+            'Ident\Doctrine\Type\UuidType',
+            'Ident\Identifiers\UuidIdentifier',
             '62e1a130-7ac0-4486-8756-ccd2a108eb4a'
         ];
     }

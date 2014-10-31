@@ -2,7 +2,6 @@
 
 namespace Ident\Identifiers;
 
-use Ident\Factory\UuidIdentifierFactory;
 use Ident\HasScalarId;
 use Ident\IdentifiesObjects;
 use Ident\Traits\Identifier;
