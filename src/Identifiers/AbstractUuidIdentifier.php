@@ -25,7 +25,7 @@ abstract class AbstractUuidIdentifier implements IdentifiesObjects
     private static function factory()
     {
         if (!self::$factory) {
-            self::$factory = new UuidIdentifierFactory();
+            self::$factory = new UuidIdentifierFactory(static::class);
         }
 
         return self::$factory;
@@ -36,7 +36,7 @@ abstract class AbstractUuidIdentifier implements IdentifiesObjects
      */
     final public static function create()
     {
-        return self::factory()->identify(static::class);
+        return self::factory()->identify();
     }
 
     /**

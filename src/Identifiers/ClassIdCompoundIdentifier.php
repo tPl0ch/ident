@@ -3,13 +3,16 @@
 namespace Ident\Identifiers;
 
 use Ident\Exception\IdentExceptions;
+use Ident\HasDefiningClass;
+use Ident\HasScalarId;
 use Ident\IdentifiesObjects;
 use Ident\Traits\Identifier;
 
 /**
  * Class ClassIdCompoundIdentifier
  */
-class ClassIdCompoundIdentifier implements IdentifiesObjects
+class ClassIdCompoundIdentifier
+    implements IdentifiesObjects, HasScalarId, HasDefiningClass
 {
     /** @var string */
     const SEPARATOR = ':';
@@ -59,7 +62,7 @@ class ClassIdCompoundIdentifier implements IdentifiesObjects
     /**
      * @return string
      */
-    public function getId()
+    public function getIdValue()
     {
         return $this->identifier;
     }

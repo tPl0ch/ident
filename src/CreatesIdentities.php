@@ -8,9 +8,7 @@ namespace Ident;
 interface CreatesIdentities
 {
     /**
-     * @param mixed|null $context
-     *
      * @return \Ident\IdentifiesObjects
      */
-    public function identify($context = null);
+    public function identify();
 }
