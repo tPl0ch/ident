@@ -11,30 +11,12 @@ use Rhumsaa\Uuid\Uuid;
  */
 class BinaryUuidIdentifier extends AbstractUuidIdentifier
 {
+    const UUID_CONVERTER = '\Rhumsaa\Uuid\Uuid::fromBytes';
+
     /**
      * @var string
      */
     protected $idValue;
-
-    /**
-     * @param string|Uuid $uuid
-     *
-     * @return BinaryUuidIdentifier|IdentifiesObjects
-     *
-     * @throws \Ident\Exception\InvalidSignature
-     */
-    final public static function fromSignature($uuid)
-    {
-        if (!$uuid instanceof Uuid) {
-            try {
-                $uuid = Uuid::fromBytes((string) $uuid);
-            } catch (\Exception $e) {
-                throw IdentExceptions::invalidSignature();
-            }
-        }
-
-        return new static($uuid);
-    }
 
     /**
      * @return string

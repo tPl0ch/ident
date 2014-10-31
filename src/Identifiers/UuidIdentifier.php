@@ -12,26 +12,6 @@ use Rhumsaa\Uuid\Uuid;
 class UuidIdentifier extends AbstractUuidIdentifier
 {
     /**
-     * @param string|Uuid $uuid
-     *
-     * @return UuidIdentifier|IdentifiesObjects
-     *
-     * @throws \Ident\Exception\InvalidSignature
-     */
-    final public static function fromSignature($uuid)
-    {
-        if (!$uuid instanceof Uuid) {
-            try {
-                $uuid = Uuid::fromString((string) $uuid);
-            } catch (\Exception $e) {
-                throw IdentExceptions::invalidSignature();
-            }
-        }
-
-        return new static($uuid);
-    }
-
-    /**
      * @param Uuid $uuid
      *
      * @return void
