@@ -52,24 +52,16 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
     }
 
     /**
-     * @param string|array $classNames
-     * @param string       $identityClass
+     * @param string $className
+     * @param string $identityClass
      *
      * @return void
      *
      * @throws \Ident\Exception\ClassAlreadyMappedException
      */
-    public function register($classNames, $identityClass)
+    public function register($className, $identityClass)
     {
-        if (is_array($classNames)) {
-            foreach ($classNames as $class) {
-                $this->register($class, $identityClass);
-            }
-
-            return;
-        }
-
-        $className = (string) $classNames;
+        $className = (string) $className;
 
         if (isset($this->classes[$className])) {
             throw IdentExceptions::classAlreadyMapped();
@@ -94,6 +86,19 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
         $this->identityClasses[$key] = $identityClass;
         $this->classes[$className] = $key;
         $this->classIdentityMap[$identityClass] = 1;
+    }
+
+    /**
+     * @param array  $classNames
+     * @param string $identityClass
+     *
+     * @return void
+     */
+    public function registerMany(array $classNames, $identityClass)
+    {
+        foreach ($classNames as $class) {
+            $this->register($class, $identityClass);
+        }
     }
 
     /**

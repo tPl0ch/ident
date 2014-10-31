@@ -15,12 +15,20 @@ interface MapsClassToIdentity
     public function map($className);
 
     /**
-     * @param string $identityClass
      * @param string $className
+     * @param string $identityClass
      *
      * @return void
      */
-    public function register($identityClass, $className);
+    public function register($className, $identityClass);
+
+    /**
+     * @param array  $classNames
+     * @param string $identityClass
+     *
+     * @return void
+     */
+    public function registerMany(array $classNames, $identityClass);
 
     /**
      * @param string $className

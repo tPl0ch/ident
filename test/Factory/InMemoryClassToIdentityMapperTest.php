@@ -46,7 +46,7 @@ class InMemoryClassToIdentityMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldMapMultipleClassesToSingleIdentity()
     {
-        $this->mapper->register(
+        $this->mapper->registerMany(
             [
                 'Ident\Test\Stubs\Order',
                 'Ident\Test\Stubs\Payment'
@@ -65,7 +65,7 @@ class InMemoryClassToIdentityMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldThrowExceptionOnMultipleMappings()
     {
-        $this->mapper->register(
+        $this->mapper->registerMany(
             [
                 'Ident\Test\Stubs\Order',
                 'Ident\Test\Stubs\Order'
