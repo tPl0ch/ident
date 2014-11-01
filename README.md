@@ -7,4 +7,11 @@ ident
 
 A library to provide an interface to object "identities and identifiers".
 
-WIP
+This lib is under heavy development so expect BC-breaks at any time.
+
+Installation
+------------
+
+```
+$ php composer.phar require tp/ident "1.0.*@dev"
+```
