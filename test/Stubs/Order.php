@@ -2,9 +2,8 @@
 
 namespace Ident\Test\Stubs;
 
-use Doctrine\ORM\Mapping as ORM;
+use Ident\CreatesIdentities;
 use Ident\HasIdentity;
-use Ident\IdentifiesObjects;
 
 /**
  * Class Order
@@ -34,11 +33,11 @@ class Order implements HasIdentity
     private $payment;
 
     /**
-     * @param IdentifiesObjects $orderId
+     * @param CreatesIdentities $idFactory
      */
-    public function __construct(IdentifiesObjects $orderId)
+    public function __construct(CreatesIdentities $idFactory)
     {
-        $this->identifier = $orderId;
+        $this->identifier = $idFactory->identify($this);
         $this->value = 0;
     }
     /**

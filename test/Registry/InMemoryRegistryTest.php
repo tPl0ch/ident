@@ -46,10 +46,10 @@ class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
             'Ident\Test\Stubs\PaymentId'
         );
 
-        $factory = new UuidIdentifierFactory($mapper);
+        $idFactory = new UuidIdentifierFactory($mapper);
 
-        $this->order = new Order($factory->identify('Ident\Test\Stubs\Order'));
-        $this->payment = new Payment($factory->identify('Ident\Test\Stubs\Payment'));
+        $this->order = new Order($idFactory);
+        $this->payment = new Payment($idFactory);
     }
 
     /**
