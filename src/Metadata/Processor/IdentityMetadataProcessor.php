@@ -53,7 +53,7 @@ class IdentityMetadataProcessor
 
         /** @var \Ident\Metadata\PropertyMetadata $propertyMetadata */
         foreach ($classMetadata->propertyMetadata as $propertyMetadata) {
-            if (isset($propertyMetadata->type)) {
+            if (isset($propertyMetadata->type) && !$propertyMetadata->getValue($object) instanceof IdentifiesObjects) {
                 $this->processMetadata($object, $propertyMetadata);
             }
         }
@@ -69,10 +69,6 @@ class IdentityMetadataProcessor
      */
     protected function processMetadata($object, PropertyMetadata $propertyMetadata)
     {
-        if ($propertyMetadata->getValue($object) instanceof IdentifiesObjects) {
-            return;
-        }
-
         $type    = $propertyMetadata->type;
         $factory = $propertyMetadata->factory;
 
@@ -117,8 +113,6 @@ class IdentityMetadataProcessor
             ];
 
             $parameters = $factory['params'];
-
-            return [$callable, $parameters];
         }
 
         return [$callable, $parameters];
