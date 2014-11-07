@@ -102,6 +102,10 @@ class IdentityMetadataProcessor
         $callable   = null;
         $parameters = [];
 
+        if (null === $factory) {
+            return [$callable, $parameters];
+        }
+
         if (is_string($factory) || is_array($factory) && !isset($factory['service'])) {
             $callable = $factory;
         }
@@ -114,9 +118,9 @@ class IdentityMetadataProcessor
 
             $parameters = $factory['params'];
 
-            return array($callable, $parameters);
+            return [$callable, $parameters];
         }
 
-        return array($callable, $parameters);
+        return [$callable, $parameters];
     }
 }
