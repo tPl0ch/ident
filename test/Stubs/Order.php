@@ -2,8 +2,10 @@
 
 namespace Ident\Test\Stubs;
 
-use Ident\CreatesIdentities;
 use Ident\HasIdentity;
+use Ident\Metadata\Annotation as Ident;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Order
@@ -17,13 +19,17 @@ class Order implements HasIdentity
      *
      * @ORM\Id()
      * @ORM\Column(type="uuid_binary")
+     * @Ident\IdType(
+     *  type="Ident\Test\Stubs\OrderId",
+     *  factory="\Rhumsaa\Uuid\Uuid::uuid4"
+     * )
      */
     private $identifier;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", options={default="0"})
+     * @ORM\Column(type="integer", options={"default"="0"})
      */
     private $value;
 
@@ -33,11 +39,32 @@ class Order implements HasIdentity
     private $payment;
 
     /**
-     * @param CreatesIdentities $idFactory
+     * @var string
+     *
+     * @ORM\Column(type="string", length=40)
+     * @Ident\IdType(
+     *  type="Ident\Identifiers\StringIdentifier",
+     *  factory={"service"="hash.factory", "method"="hash", "params"={"sha1"}}
+     * )
      */
-    public function __construct(CreatesIdentities $idFactory)
+    private $applicationId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=64)
+     * @Ident\IdType(
+     *  type="string",
+     *  factory={"service"="hash.factory", "method"="hash", "params"={"sha256"}}
+     * )
+     */
+    private $correlationId;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        $this->identifier = $idFactory->identify($this);
         $this->value = 0;
     }
     /**
@@ -80,5 +107,21 @@ class Order implements HasIdentity
     public function setPayment(Payment $payment)
     {
         $this->payment = $payment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationId()
+    {
+        return $this->applicationId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCorrelationId()
+    {
+        return $this->correlationId;
     }
 }

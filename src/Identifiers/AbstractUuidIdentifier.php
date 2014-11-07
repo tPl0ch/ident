@@ -56,4 +56,12 @@ abstract class AbstractUuidIdentifier
     {
         $this->extractSignature($uuid);
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->signature;
+    }
 }

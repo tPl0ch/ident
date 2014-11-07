@@ -2,16 +2,15 @@
 
 namespace Ident\Test\Registry;
 
-use Ident\Factory\InMemoryClassToIdentityMapper;
-use Ident\Factory\UuidIdentifierFactory;
 use Ident\Registry\InMemoryRegistry;
+use Ident\Test\AbstractIdentTest;
 use Ident\Test\Stubs\Order;
 use Ident\Test\Stubs\Payment;
 
 /**
  * Class InMemoryRegistryTest
  */
-class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
+class InMemoryRegistryTest extends AbstractIdentTest
 {
     /**
      * @var \Ident\Registry\InMemoryRegistry
@@ -35,21 +34,11 @@ class InMemoryRegistryTest extends \PHPUnit_Framework_TestCase
     {
         $this->registry = new InMemoryRegistry();
 
-        $mapper = new InMemoryClassToIdentityMapper();
-        $mapper->register(
-            'Ident\Test\Stubs\Order',
-            'Ident\Test\Stubs\OrderId'
-        );
+        $this->order = new Order();
+        $this->payment = new Payment();
 
-        $mapper->register(
-            'Ident\Test\Stubs\Payment',
-            'Ident\Test\Stubs\PaymentId'
-        );
-
-        $idFactory = new UuidIdentifierFactory($mapper);
-
-        $this->order = new Order($idFactory);
-        $this->payment = new Payment($idFactory);
+        $this->getProcessor()->processIdentities($this->order);
+        $this->getProcessor()->processIdentities($this->payment);
     }
 
     /**

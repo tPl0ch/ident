@@ -2,31 +2,36 @@
 
 namespace Ident\Test\Stubs;
 
-use Ident\CreatesIdentities;
 use Ident\HasIdentity;
+use Ident\Metadata\Annotation as Ident;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Payment
+ * Class Order
+ *
+ * @ORM\Entity()
  */
 class Payment implements HasIdentity
 {
     /**
      * @var PaymentId
+     *
+     * @ORM\Id()
+     * @ORM\Column(type="uuid")
+     * @Ident\IdType(
+     *  type="Ident\Test\Stubs\PaymentId",
+     *  factory="\Rhumsaa\Uuid\Uuid::uuid4"
+     * )
      */
     private $id;
 
     /**
-     * @var bool
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
      */
     private $processed = false;
-
-    /**
-     * @param CreatesIdentities $idFactory
-     */
-    public function __construct(CreatesIdentities $idFactory)
-    {
-        $this->id = $idFactory->identify($this);
-    }
 
     /**
      * @return \Ident\IdentifiesObjects

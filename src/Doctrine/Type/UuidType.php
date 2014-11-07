@@ -10,7 +10,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 class UuidType extends AbstractUuidType
 {
     /** @var string */
-    const NAME = 'uuid';
+    const NAME = 'uuid_string';
 
     /** @var string */
     const DEFAULT_CLASS = 'Ident\Identifiers\UuidIdentifier';

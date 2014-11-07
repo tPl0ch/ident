@@ -20,4 +20,9 @@ interface IdentifiesObjects extends IdentityCanBeCompared
      * @return mixed
      */
     public function signature();
+
+    /**
+     * @return string
+     */
+    public function __toString();
 }

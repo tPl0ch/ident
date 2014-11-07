@@ -13,7 +13,7 @@ class StringIdentifier implements IdentifiesObjects
     /**
      * @var string
      */
-    protected $identifier;
+    protected $signature;
 
     /**
      * @param string $id
@@ -26,11 +26,11 @@ class StringIdentifier implements IdentifiesObjects
     }
 
     /**
-     * @param string $identifier
+     * @param string $signature
      */
-    final public function __construct($identifier)
+    final public function __construct($signature)
     {
-        $this->identifier = (string) $identifier;
+        $this->signature = (string) $signature;
     }
 
     /**
@@ -58,7 +58,7 @@ class StringIdentifier implements IdentifiesObjects
      */
     public function signature()
     {
-        return $this->identifier;
+        return $this->signature;
     }
 
     /**
@@ -69,5 +69,13 @@ class StringIdentifier implements IdentifiesObjects
     public function equals(IdentifiesObjects $id)
     {
         return $this->signature() === $id->signature();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->signature;
     }
 }

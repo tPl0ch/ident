@@ -2,11 +2,11 @@
 
 namespace Ident\Test\Stubs;
 
-use Ident\Identifiers\UuidIdentifier;
+use Ident\Identifiers\BinaryUuidIdentifier;
 
 /**
  * Class OrderId
  */
-class OrderId extends UuidIdentifier
+class OrderId extends BinaryUuidIdentifier
 {
 }

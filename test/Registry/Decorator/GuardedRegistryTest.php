@@ -4,16 +4,16 @@ namespace Ident\Test\Registry\Decorator;
 
 use Ident\Exception\IdentExceptions;
 use Ident\Factory\InMemoryClassToIdentityMapper;
-use Ident\Factory\UuidIdentifierFactory;
 use Ident\HasIdentity;
 use Ident\Registry\Decorator\GuardedRegistry;
+use Ident\Test\AbstractIdentTest;
 use Ident\Test\Stubs\Order;
 use Ident\Test\Stubs\Payment;
 
 /**
  * Class GuardedRegistryTest
  */
-class GuardedRegistryTest extends \PHPUnit_Framework_TestCase
+class GuardedRegistryTest extends AbstractIdentTest
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -52,21 +52,11 @@ class GuardedRegistryTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $mapper = new InMemoryClassToIdentityMapper();
-        $mapper->register(
-            'Ident\Test\Stubs\Order',
-            'Ident\Test\Stubs\OrderId'
-        );
+        $this->order = new Order();
+        $this->payment = new Payment();
 
-        $mapper->register(
-            'Ident\Test\Stubs\Payment',
-            'Ident\Test\Stubs\PaymentId'
-        );
-
-        $idFactory = new UuidIdentifierFactory($mapper);
-
-        $this->order = new Order($idFactory);
-        $this->payment = new Payment($idFactory);
+        $this->getProcessor()->processIdentities($this->order);
+        $this->getProcessor()->processIdentities($this->payment);
     }
 
     /**

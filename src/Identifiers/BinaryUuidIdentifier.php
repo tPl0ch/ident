@@ -42,4 +42,12 @@ class BinaryUuidIdentifier extends AbstractUuidIdentifier
     {
         return $this->idValue;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->idValue;
+    }
 }

@@ -74,4 +74,12 @@ class ClassIdCompoundIdentifier
     {
         return $this->className;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->signature;
+    }
 }

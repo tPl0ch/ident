@@ -70,8 +70,7 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
         $identityClass = (string) $identityClass;
 
         $this->validateClass($identityClass, '\Ident\IdentifiesObjects');
-        $this->validateClass($className, '\Ident\HasIdentity');
-
+        $this->validateClass($className, '\Ident\HasIdentity', false);
 
         if ($key = array_search($identityClass, $this->identityClasses, true)) {
             $this->classes[$className] = $key;
@@ -121,16 +120,21 @@ class InMemoryClassToIdentityMapper implements MapsClassToIdentity
     /**
      * @param string $class
      * @param string $interface
+     * @param bool   $mustExist
      *
      * @throws \Ident\Exception\ClassNotFoundException
      * @throws \Ident\Exception\TypeNotAllowed
      */
-    protected function validateClass($class, $interface)
+    protected function validateClass($class, $interface, $mustExist = true)
     {
         try {
             $refClass = new \ReflectionClass($class);
         } catch (\ReflectionException $e) {
-            throw IdentExceptions::classNotFound($class);
+            if ($mustExist) {
+                throw IdentExceptions::classNotFound($class);
+            }
+
+            return;
         }
 
         if (!$refClass->implementsInterface($interface)) {

@@ -2,11 +2,11 @@
 
 namespace Ident\Test\Stubs;
 
-use Ident\Identifiers\BinaryUuidIdentifier;
+use Ident\Identifiers\UuidIdentifier;
 
 /**
  * Class PaymentId
  */
-class PaymentId extends BinaryUuidIdentifier
+class PaymentId extends UuidIdentifier
 {
 }

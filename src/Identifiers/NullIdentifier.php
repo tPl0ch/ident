@@ -45,4 +45,12 @@ final class NullIdentifier implements IdentifiesObjects
     {
         return $id instanceof self;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return null;
+    }
 }
