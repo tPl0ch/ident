@@ -3,7 +3,6 @@
 namespace Ident\Metadata\Driver;
 
 use Doctrine\Common\Annotations\Reader;
-use Ident\MapsClassToIdentity;
 use Ident\Metadata\PropertyMetadata;
 use Metadata\Driver\DriverInterface;
 use Metadata\MergeableClassMetadata;
@@ -36,11 +35,11 @@ class AnnotationDriver implements DriverInterface
      */
     public function loadMetadataForClass(\ReflectionClass $class)
     {
-        $className = $class->getName();
+        $className = $class->name;
         $classMetadata = new MergeableClassMetadata($className);
 
         foreach ($class->getProperties() as $reflectionProperty) {
-            $propertyMetadata = new PropertyMetadata($class->getName(), $reflectionProperty->getName());
+            $propertyMetadata = new PropertyMetadata($className, $reflectionProperty->getName());
 
             /** @var \Ident\Metadata\Annotation\IdType|null $annotation */
             $annotation = $this->reader->getPropertyAnnotation(

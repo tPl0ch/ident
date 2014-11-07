@@ -79,18 +79,26 @@ class IdentityMetadataProcessor
         try {
             $type = $this->mapper->map($type);
         } catch (\Exception $e) {
+            // If the mapper has no alias, $type should be treated as FQCN
         }
 
-        $refClass = new \ReflectionClass($type);
-        if (!$refClass->implementsInterface('Ident\IdentifiesObjects')) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Type '%s' must implement 'Ident\\IdentifiesObjects'",
-                    $type
-                )
-            );
+        list($callable, $parameters) = $this->getCallable($factory);
+
+        if (!is_callable($callable)) {
+            throw new \Exception("Callable not callable");
         }
 
+        $identifier = $type::fromSignature(call_user_func_array($callable, $parameters));
+        $propertyMetadata->setValue($object, $identifier);
+    }
+
+    /**
+     * @param string|array $factory
+     *
+     * @return array
+     */
+    private function getCallable($factory)
+    {
         $callable   = null;
         $parameters = [];
 
@@ -105,13 +113,10 @@ class IdentityMetadataProcessor
             ];
 
             $parameters = $factory['params'];
+
+            return array($callable, $parameters);
         }
 
-        if (!is_callable($callable)) {
-            throw new \Exception("Callable not callable");
-        }
-
-        $identifier = $type::fromSignature(call_user_func_array($callable, $parameters));
-        $propertyMetadata->setValue($object, $identifier);
+        return array($callable, $parameters);
     }
 }
