@@ -1,8 +1,10 @@
 <?php
 
-namespace Ident\Test;
+namespace Ident\Test\Doctrine;
 
+use Doctrine\ORM\Tools\SchemaTool;
 use Ident\Doctrine\Subscriber\IdentitySubscriber;
+use Ident\Test\AbstractIdentTest;
 use Ident\Test\Stubs\Order;
 
 /**
@@ -41,8 +43,6 @@ class DoctrineIntegrationTest extends AbstractIdentTest
      */
     public function shouldAddIdsOnPrePersist()
     {
-        $this->order->addValue(25);
-
         $this->manager->persist($this->order);
 
         $this->assertInstanceOf(
@@ -58,6 +58,36 @@ class DoctrineIntegrationTest extends AbstractIdentTest
         $this->assertInstanceOf(
             'Ident\Identifiers\StringIdentifier',
             $this->order->getCorrelationId()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function shouldAddIdsOnPostLoad()
+    {
+        $this->manager->persist($this->order);
+        $this->manager->flush();
+
+        /** @var \Ident\Test\Stubs\Order $persistedOrder */
+        $persistedOrder = $this->manager->find(
+            get_class($this->order),
+            $this->order->getIdentifier()
+        );
+
+        $this->assertInstanceOf(
+            'Ident\Test\Stubs\OrderId',
+            $persistedOrder->getIdentifier()
+        );
+
+        $this->assertInstanceOf(
+            'Ident\Identifiers\StringIdentifier',
+            $persistedOrder->getApplicationId()
+        );
+
+        $this->assertInstanceOf(
+            'Ident\Identifiers\StringIdentifier',
+            $persistedOrder->getCorrelationId()
         );
     }
 }

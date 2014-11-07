@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Order
  *
  * @ORM\Entity()
+ * @ORM\Table("orders")
  */
 class Order implements HasIdentity
 {
@@ -31,7 +32,7 @@ class Order implements HasIdentity
      *
      * @ORM\Column(type="integer", options={"default"="0"})
      */
-    private $value;
+    private $value = 0;
 
     /**
      * @var Payment
@@ -60,13 +61,6 @@ class Order implements HasIdentity
      */
     private $correlationId;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->value = 0;
-    }
     /**
      * @return \Ident\IdentifiesObjects
      */

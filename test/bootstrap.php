@@ -94,11 +94,19 @@ $config->setMetadataDriverImpl($services['driver.annotation']);
 
 $services['doctrine.orm.configuration'] = $config;
 
-$services['em'] = \Doctrine\ORM\EntityManager::create($dbParams, $config);
+$em = \Doctrine\ORM\EntityManager::create($dbParams, $config);
+$tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+$classes = [
+    $em->getClassMetadata('Ident\Test\Stubs\Order'),
+    $em->getClassMetadata('Ident\Test\Stubs\Payment')
+];
+$tool->createSchema($classes);
+
+$services['em'] = $em;
 
 $mapper = new \Ident\Factory\InMemoryClassToIdentityMapper();
 $mapper->register('string', 'Ident\Identifiers\StringIdentifier');
-$mapper->register('uuid', 'Ident\Identifiers\UuidIdentifier');
+$mapper->register('uuid_string', 'Ident\Identifiers\UuidIdentifier');
 $mapper->register('uuid_binary', 'Ident\Identifiers\BinaryUuidIdentifier');
 
 $services['mapper'] = $mapper;

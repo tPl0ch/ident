@@ -8,9 +8,10 @@ use Ident\Metadata\Annotation as Ident;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Order
+ * Class Payment
  *
  * @ORM\Entity()
+ * @ORM\Table("payments")
  */
 class Payment implements HasIdentity
 {
@@ -18,7 +19,7 @@ class Payment implements HasIdentity
      * @var PaymentId
      *
      * @ORM\Id()
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid_string")
      * @Ident\IdType(
      *  type="Ident\Test\Stubs\PaymentId",
      *  factory="\Rhumsaa\Uuid\Uuid::uuid4"
