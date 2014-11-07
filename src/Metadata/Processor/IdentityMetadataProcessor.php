@@ -89,20 +89,16 @@ class IdentityMetadataProcessor
     }
 
     /**
-     * @param string|array $factory
+     * @param string|array|null $factory
      *
      * @return array
      */
-    private function getCallable($factory)
+    private function getCallable($factory = null)
     {
         $callable   = null;
         $parameters = [];
 
-        if (null === $factory) {
-            return [$callable, $parameters];
-        }
-
-        if (is_string($factory) || is_array($factory) && !isset($factory['service'])) {
+        if (is_string($factory) || (is_array($factory) && !isset($factory['service']))) {
             $callable = $factory;
         }
 
