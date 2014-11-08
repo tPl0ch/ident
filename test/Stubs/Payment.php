@@ -49,7 +49,7 @@ class Payment implements HasIdentity
      */
     public function equals(HasIdentity $identity)
     {
-        return $this->id->equals($identity->getIdentifier());
+        return $this->id->equals($identity->getIdentifier()) && $identity instanceof self;
     }
 
     /**

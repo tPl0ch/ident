@@ -2,6 +2,7 @@
 
 namespace Ident\Metadata\Processor;
 
+use Ident\CreatesIdentities;
 use Ident\IdentifiesObjects;
 use Ident\MapsClassToIdentity;
 use Ident\Metadata\PropertyMetadata;
@@ -11,7 +12,7 @@ use Metadata\MetadataFactoryInterface;
 /**
  * Class IdentityMetadataProcessor
  */
-class IdentityMetadataProcessor
+class IdentityMetadataProcessor implements CreatesIdentities
 {
     /**
      * @var ServiceLocatorInterface
@@ -50,7 +51,7 @@ class IdentityMetadataProcessor
      * @return object
      * @throws \Exception
      */
-    public function processIdentities($object, $convertIdentifiers = false)
+    public function identify($object, $convertIdentifiers = false)
     {
         $this->validateObject($object);
 

@@ -76,7 +76,7 @@ class Order implements HasIdentity
      */
     public function equals(HasIdentity $identity)
     {
-        return $this->identifier->equals($identity->getIdentifier());
+        return $this->identifier->equals($identity->getIdentifier()) && $identity instanceof self;
     }
 
     /**

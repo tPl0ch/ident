@@ -65,6 +65,6 @@ class IdentitySubscriber implements EventSubscriber
             return;
         }
 
-        $this->processor->processIdentities($object, $convertIdentifiers);
+        $this->processor->identify($object, $convertIdentifiers);
     }
 }

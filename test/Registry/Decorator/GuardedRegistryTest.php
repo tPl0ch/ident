@@ -54,8 +54,8 @@ class GuardedRegistryTest extends AbstractIdentTest
         $this->order = new Order();
         $this->payment = new Payment();
 
-        $this->getProcessor()->processIdentities($this->order);
-        $this->getProcessor()->processIdentities($this->payment);
+        $this->getProcessor()->identify($this->order);
+        $this->getProcessor()->identify($this->payment);
     }
 
     /**

@@ -16,7 +16,7 @@ class IdentityMetadataProcessorTest extends AbstractIdentTest
     public function shouldProcessAnnotations()
     {
         $order = new Order();
-        $this->getProcessor()->processIdentities($order);
+        $this->getProcessor()->identify($order);
 
         $this->assertInstanceOf(
             'Ident\Test\Stubs\OrderId',
