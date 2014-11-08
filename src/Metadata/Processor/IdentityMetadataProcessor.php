@@ -52,9 +52,7 @@ class IdentityMetadataProcessor
      */
     public function processIdentities($object, $convertIdentifiers = false)
     {
-        if (!is_object($object)) {
-            throw new \InvalidArgumentException('No object provided');
-        }
+        $this->validateObject($object);
 
         $classMetadata = $this->metadataFactory->getMetadataForClass(get_class($object));
 
@@ -87,38 +85,10 @@ class IdentityMetadataProcessor
 
         list($callable, $parameters) = $this->getCallable($factory);
 
-        if (!is_callable($callable)) {
-            throw new \Exception("Callable not callable");
-        }
+        $this->verifyCallable($callable);
 
         $identifier = $type::fromSignature(call_user_func_array($callable, $parameters));
         $propertyMetadata->setValue($object, $identifier);
-    }
-
-    /**
-     * @param string|array|null $factory
-     *
-     * @return array
-     */
-    private function getCallable($factory = null)
-    {
-        $callable   = null;
-        $parameters = [];
-
-        if (is_string($factory) || (is_array($factory) && !isset($factory['service']))) {
-            $callable = $factory;
-        }
-
-        if (is_array($factory) && isset($factory['service'])) {
-            $callable = [
-                $this->serviceLocator->get($factory['service']),
-                $factory['method']
-            ];
-
-            $parameters = $factory['params'];
-        }
-
-        return [$callable, $parameters];
     }
 
     /**
@@ -143,16 +113,7 @@ class IdentityMetadataProcessor
         $refClass        = new \ReflectionClass($type);
         $identifierClass = get_class($identifier);
 
-        if (!$refClass->isSubclassOf($identifierClass) && !$refClass->isInstance($identifier)) {
-            throw new \Exception(
-                sprintf(
-                    "Identifier class '%s' must be an instance or subclass of '%s'",
-                    $refClass->name,
-                    $identifierClass
-                )
-            );
-        }
-
+        $this->confirmIdentifierClasses($refClass, $identifierClass, $identifier);
         $propertyMetadata->setValue($object, $type::fromSignature($identifier->signature()));
     }
 
@@ -172,5 +133,96 @@ class IdentityMetadataProcessor
         }
 
         return $type;
+    }
+
+    /**
+     * @param string|array|null $factory
+     *
+     * @return array
+     */
+    private function getCallable($factory = null)
+    {
+        $callable   = null;
+        $parameters = [];
+
+        if ($this->isScalarCallable($factory)) {
+            $callable = $factory;
+        }
+
+        if ($this->isArrayCallable($factory)) {
+            $callable = [
+                $this->serviceLocator->get($factory['service']),
+                $factory['method']
+            ];
+
+            $parameters = $factory['params'];
+        }
+
+        return [$callable, $parameters];
+    }
+
+    /**
+     * @param $refClass
+     * @param $identifierClass
+     * @param $identifier
+     *
+     * @throws \Exception
+     */
+    private function confirmIdentifierClasses(
+        \ReflectionClass $refClass,
+        $identifierClass,
+        IdentifiesObjects $identifier
+    ) {
+        if (!$refClass->isSubclassOf($identifierClass) && !$refClass->isInstance($identifier)) {
+            throw new \Exception(
+                sprintf(
+                    "Identifier class '%s' must be an instance or subclass of '%s'",
+                    $refClass->name,
+                    $identifierClass
+                )
+            );
+        }
+    }
+
+    /**
+     * @param $object
+     */
+    private function validateObject($object)
+    {
+        if (!is_object($object)) {
+            throw new \InvalidArgumentException('No object provided');
+        }
+    }
+
+    /**
+     * @param $factory
+     *
+     * @return bool
+     */
+    private function isScalarCallable($factory)
+    {
+        return is_string($factory) || (is_array($factory) && !isset($factory['service']));
+    }
+
+    /**
+     * @param $factory
+     *
+     * @return bool
+     */
+    private function isArrayCallable($factory)
+    {
+        return is_array($factory) && isset($factory['service']);
+    }
+
+    /**
+     * @param $callable
+     *
+     * @throws \Exception
+     */
+    protected function verifyCallable($callable)
+    {
+        if (!is_callable($callable)) {
+            throw new \Exception("Callable not callable");
+        }
     }
 }
