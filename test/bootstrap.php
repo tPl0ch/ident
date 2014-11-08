@@ -104,7 +104,7 @@ $tool->createSchema($classes);
 
 $services['em'] = $em;
 
-$mapper = new \Ident\Factory\InMemoryClassToIdentityMapper();
+$mapper = new \Ident\Mapper\InMemoryClassToIdentityMapper();
 $mapper->register('string', 'Ident\Identifiers\StringIdentifier');
 $mapper->register('uuid_string', 'Ident\Identifiers\UuidIdentifier');
 $mapper->register('uuid_binary', 'Ident\Identifiers\BinaryUuidIdentifier');

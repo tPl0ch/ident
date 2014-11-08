@@ -3,7 +3,6 @@
 namespace Ident\Test\Registry\Decorator;
 
 use Ident\Exception\IdentExceptions;
-use Ident\Factory\InMemoryClassToIdentityMapper;
 use Ident\HasIdentity;
 use Ident\Registry\Decorator\GuardedRegistry;
 use Ident\Test\AbstractIdentTest;

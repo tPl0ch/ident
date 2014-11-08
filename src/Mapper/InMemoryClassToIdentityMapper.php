@@ -1,6 +1,6 @@
 <?php
 
-namespace Ident\Factory;
+namespace Ident\Mapper;
 
 use Ident\Exception\IdentExceptions;
 use Ident\MapsClassToIdentity;
