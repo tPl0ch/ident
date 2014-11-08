@@ -65,15 +65,9 @@ class DoctrineIntegrationTest extends AbstractIdentTest
      */
     public function shouldAddIdsOnPostLoad()
     {
-        $this->manager->persist($this->order);
-        $this->manager->flush();
+        list($identifier, $correlationId, $applicationId) = $this->doDefaultFlush();
 
-        $identifier = $this->order->getIdentifier();
-        $correlationId = $this->order->getCorrelationId();
-        $applicationId = $this->order->getApplicationId();
-
-        $this->manager->detach($this->order);
-        unset($this->order);
+        $this->tearDown();
 
         /** @var \Ident\Test\Stubs\Order $persistedOrder */
         $persistedOrder = $this->manager->find(
@@ -81,6 +75,34 @@ class DoctrineIntegrationTest extends AbstractIdentTest
             $identifier
         );
 
+        $this->doDefaultAssertions($persistedOrder, $identifier, $applicationId, $correlationId);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldAlsoFindNonPrimaryKeys()
+    {
+        list($identifier, $correlationId, $applicationId) = $this->doDefaultFlush();
+
+        $this->tearDown();
+
+        /** @var \Ident\Test\Stubs\Order $persistedOrder */
+        $persistedOrder = $this->manager
+            ->getRepository('Ident\Test\Stubs\Order')
+            ->findOneBy(['applicationId' => $applicationId]);
+
+        $this->doDefaultAssertions($persistedOrder, $identifier, $applicationId, $correlationId);
+    }
+
+    /**
+     * @param $persistedOrder
+     * @param $identifier
+     * @param $applicationId
+     * @param $correlationId
+     */
+    protected function doDefaultAssertions($persistedOrder, $identifier, $applicationId, $correlationId)
+    {
         $this->assertInstanceOf(
             'Ident\Test\Stubs\OrderId',
             $persistedOrder->getIdentifier()
@@ -109,11 +131,32 @@ class DoctrineIntegrationTest extends AbstractIdentTest
         );
     }
 
-    protected function tearDown()
+    /**
+     * @return array
+     */
+    protected function doDefaultFlush()
     {
+        $this->manager->persist($this->order);
+        $this->manager->flush();
+
+        $identifier    = $this->order->getIdentifier();
+        $correlationId = $this->order->getCorrelationId();
+        $applicationId = $this->order->getApplicationId();
+
+        return [$identifier, $correlationId, $applicationId];
+    }
+
+    protected function tearDown($remove = false)
+    {
+        parent::tearDown();
+
         if (isset($this->order)) {
-            $this->manager->detach($this->order);
-            unset($this->order);
+            if ($remove) {
+                $this->manager->remove($this->order);
+                $this->manager->flush($this->order);
+            } else {
+                $this->manager->detach($this->order);
+            }
         }
     }
 }
