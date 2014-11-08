@@ -6,6 +6,7 @@ use Ident\HasIdentity;
 use Ident\Metadata\Annotation as Ident;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ident\ObjectCanBeCompared;
 
 /**
  * Class Order
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table("orders")
  */
-class Order implements HasIdentity
+class Order implements HasIdentity, ObjectCanBeCompared
 {
     /**
      * @var OrderId

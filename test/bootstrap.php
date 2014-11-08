@@ -9,51 +9,14 @@ define('VENDOR_PATH', realpath(__DIR__ . '/../vendor'));
 // Autoload composer
 require VENDOR_PATH . '/autoload.php';
 
-/**
- * Class Loader
- */
-class Loader {
-    /**
-     * @var array
-     */
-    protected $namespaces;
-
-    /**
-     * @param array $namespaces
-     */
-    public function __construct(array $namespaces) {
-        $this->namespaces = $namespaces;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function __invoke($name) {
-        foreach ($this->namespaces as $namespace) {
-            if (strpos($name, $namespace) === 0) {
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-}
-
 
 // Annotations
 \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(
     VENDOR_PATH . "/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php"
 );
 
-\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(
-    new Loader(
-        [
-            'Ident\Metadata\Annotation'
-        ]
-    )
+\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(
+    SRC_PATH . "/Metadata/Annotation/Mapping/IdentAnnotations.php"
 );
 
 $paths = [

@@ -32,12 +32,12 @@ class IdentityMetadataProcessor implements CreatesIdentities
     /**
      * @param MetadataFactoryInterface $metadataFactory
      * @param ServiceLocatorInterface  $serviceLocator
-     * @param MapsAliasToIdentity      $mapper
+     * @param MapsAliasToIdentity|null $mapper
      */
     public function __construct(
         MetadataFactoryInterface $metadataFactory,
         ServiceLocatorInterface $serviceLocator,
-        MapsAliasToIdentity $mapper
+        MapsAliasToIdentity $mapper = null
     ) {
         $this->metadataFactory = $metadataFactory;
         $this->serviceLocator = $serviceLocator;
@@ -81,6 +81,10 @@ class IdentityMetadataProcessor implements CreatesIdentities
      */
     protected function processMetadata($object, PropertyMetadata $propertyMetadata)
     {
+        if ($propertyMetadata->getValue($object) instanceof IdentifiesObjects) {
+            return;
+        }
+
         $type = $this->getType($propertyMetadata);
         $factory = $propertyMetadata->factory;
 
@@ -127,10 +131,12 @@ class IdentityMetadataProcessor implements CreatesIdentities
     {
         $type = $propertyMetadata->type;
 
-        try {
-            $type = $this->mapper->map($type);
-        } catch (\Exception $e) {
-            // If the mapper has no alias, $type should be treated as FQCN
+        if ($this->mapper) {
+            try {
+                $type = $this->mapper->map($type);
+            } catch (\Exception $e) {
+                // If the mapper has no alias, $type should be treated as FQCN
+            }
         }
 
         return $type;

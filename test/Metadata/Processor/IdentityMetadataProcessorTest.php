@@ -33,4 +33,23 @@ class IdentityMetadataProcessorTest extends AbstractIdentTest
             $order->getCorrelationId()
         );
     }
+
+    /**
+     * @test
+     */
+    public function shouldProcessAnnotationsOnlyOnce()
+    {
+        $order = new Order();
+        $this->getProcessor()->identify($order);
+
+        $id = $order->getIdentifier();
+        $correlationId = $order->getCorrelationId();
+        $appId = $order->getApplicationId();
+
+        $this->getProcessor()->identify($order);
+
+        $this->assertTrue($id->equals($order->getIdentifier()));
+        $this->assertTrue($correlationId->equals($order->getCorrelationId()));
+        $this->assertTrue($appId->equals($order->getApplicationId()));
+    }
 }
