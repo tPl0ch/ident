@@ -4,6 +4,7 @@ namespace Ident\Metadata\Driver;
 
 use Doctrine\Common\Annotations\Reader;
 use Ident\Metadata\PropertyMetadata;
+use Metadata\ClassMetadata;
 use Metadata\Driver\DriverInterface;
 use Metadata\MergeableClassMetadata;
 
@@ -39,22 +40,35 @@ class AnnotationDriver implements DriverInterface
         $classMetadata = new MergeableClassMetadata($className);
 
         foreach ($class->getProperties() as $reflectionProperty) {
-            $propertyMetadata = new PropertyMetadata($className, $reflectionProperty->getName());
-
-            /** @var \Ident\Metadata\Annotation\IdType|null $annotation */
-            $annotation = $this->reader->getPropertyAnnotation(
-                $reflectionProperty,
-                self::ANNOTATION_ID_TYPE
-            );
-
-            if (null !== $annotation) {
-                $propertyMetadata->factory = $annotation->factory;
-                $propertyMetadata->type = $annotation->type;
-            }
-
-            $classMetadata->addPropertyMetadata($propertyMetadata);
+            $this->processPropertyMetadata($className, $reflectionProperty, $classMetadata);
         }
 
         return $classMetadata;
+    }
+
+    /**
+     * @param string              $className
+     * @param \ReflectionProperty $reflectionProperty
+     * @param ClassMetadata       $classMetadata
+     */
+    protected function processPropertyMetadata(
+        $className,
+        \ReflectionProperty $reflectionProperty,
+        ClassMetadata $classMetadata
+    ) {
+        $propertyMetadata = new PropertyMetadata($className, $reflectionProperty->getName());
+
+        /** @var \Ident\Metadata\Annotation\IdType|null $annotation */
+        $annotation = $this->reader->getPropertyAnnotation(
+            $reflectionProperty,
+            self::ANNOTATION_ID_TYPE
+        );
+
+        if (null !== $annotation) {
+            $propertyMetadata->factory = $annotation->factory;
+            $propertyMetadata->type    = $annotation->type;
+        }
+
+        $classMetadata->addPropertyMetadata($propertyMetadata);
     }
 }

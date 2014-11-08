@@ -36,24 +36,13 @@ final class IdType
      */
     private function validateClassData(array $data)
     {
-        if (!isset($data['type'])) {
-            throw new \InvalidArgumentException("Property 'type' must be defined for the 'IdType' annotation.");
-        }
+        $data = $this->verifyType($data);
 
         if (!class_exists($data['type'])) {
             return $data['type'];
         }
 
-        $refClass = new \ReflectionClass($data['type']);
-
-        if (!$refClass->implementsInterface('Ident\IdentifiesObjects')) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Class '%s' must implement 'Ident\\IdentifiesObjects'.",
-                    $data['type']
-                )
-            );
-        }
+        $this->verifyImplementation($data);
 
         return $data['type'];
     }
@@ -72,14 +61,7 @@ final class IdType
         $factory = $data['factory'];
 
         if (is_string($factory)) {
-            if (!is_callable($factory)) {
-                throw new \InvalidArgumentException(
-                    sprintf(
-                        "Property 'factory' of annotation 'IdType' of type string with value '%s' must be a callable",
-                        $factory
-                    )
-                );
-            }
+            $this->verifyCallback($factory);
 
             return $factory;
         }
@@ -93,5 +75,57 @@ final class IdType
         ];
 
         return array_merge($defaultFactory, $factory);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function verifyType(array $data)
+    {
+        if (!isset($data['type'])) {
+            throw new \InvalidArgumentException("Property 'type' must be defined for the 'IdType' annotation.");
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function verifyImplementation(array $data)
+    {
+        $refClass = new \ReflectionClass($data['type']);
+
+        if (!$refClass->implementsInterface('Ident\IdentifiesObjects')) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Class '%s' must implement 'Ident\\IdentifiesObjects'.",
+                    $data['type']
+                )
+            );
+        }
+    }
+
+    /**
+     * @param $factory
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function verifyCallback($factory)
+    {
+        if (!is_callable($factory)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Property 'factory' of annotation 'IdType' of type string with value '%s' must be a callable",
+                    $factory
+                )
+            );
+        }
     }
 }
