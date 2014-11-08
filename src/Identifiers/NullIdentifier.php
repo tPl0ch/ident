@@ -19,7 +19,7 @@ final class NullIdentifier implements IdentifiesObjects
      */
     public static function fromSignature($signature)
     {
-        if ($signature !== null) {
+        if ($signature !== null && $signature !== '') {
             throw IdentExceptions::invalidSignature('NOT NULL');
         }
 
@@ -51,6 +51,6 @@ final class NullIdentifier implements IdentifiesObjects
      */
     public function __toString()
     {
-        return null;
+        return '';
     }
 }
