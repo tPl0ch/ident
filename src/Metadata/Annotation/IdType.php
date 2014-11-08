@@ -66,15 +66,7 @@ final class IdType
             return $factory;
         }
 
-        $factory = (array) $factory;
-
-        $defaultFactory = [
-            'service' => null,
-            'params'  => [],
-            'method'  => null
-        ];
-
-        return array_merge($defaultFactory, $factory);
+        return $this->processArrayFactory($factory);
     }
 
     /**
@@ -127,5 +119,23 @@ final class IdType
                 )
             );
         }
+    }
+
+    /**
+     * @param array $factory
+     *
+     * @return array
+     */
+    private function processArrayFactory($factory)
+    {
+        $factory = (array) $factory;
+
+        $defaultFactory = [
+            'service' => null,
+            'params'  => [],
+            'method'  => null
+        ];
+
+        return array_merge($defaultFactory, $factory);
     }
 }
