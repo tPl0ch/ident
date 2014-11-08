@@ -5,7 +5,7 @@ namespace Ident;
 /**
  * Interface IdentifiesObjects
  */
-interface IdentifiesObjects extends IdentityCanBeCompared
+interface IdentifiesObjects
 {
     /**
      * @param mixed $signature

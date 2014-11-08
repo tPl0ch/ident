@@ -4,11 +4,12 @@ namespace Ident\Identifiers;
 
 use Ident\Exception\IdentExceptions;
 use Ident\IdentifiesObjects;
+use Ident\IdentityCanBeCompared;
 
 /**
  * Class StringIdentifier
  */
-class StringIdentifier implements IdentifiesObjects
+class StringIdentifier implements IdentifiesObjects, IdentityCanBeCompared
 {
     /**
      * @var string

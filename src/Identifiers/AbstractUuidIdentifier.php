@@ -4,6 +4,7 @@ namespace Ident\Identifiers;
 
 use Ident\HasScalarId;
 use Ident\IdentifiesObjects;
+use Ident\IdentityCanBeCompared;
 use Ident\Traits\Identifier;
 use Ident\Exception\IdentExceptions;
 use Rhumsaa\Uuid\Uuid;
@@ -12,7 +13,7 @@ use Rhumsaa\Uuid\Uuid;
  * Class AbstractUuidIdentifier
  */
 abstract class AbstractUuidIdentifier
-    implements IdentifiesObjects, HasScalarId
+    implements IdentifiesObjects, IdentityCanBeCompared, HasScalarId
 {
     const UUID_CONVERTER = '\Rhumsaa\Uuid\Uuid::fromString';
 

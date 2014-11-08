@@ -4,11 +4,12 @@ namespace Ident\Identifiers;
 
 use Ident\Exception\IdentExceptions;
 use Ident\IdentifiesObjects;
+use Ident\IdentityCanBeCompared;
 
 /**
  * Class NullIdentifier
  */
-final class NullIdentifier implements IdentifiesObjects
+final class NullIdentifier implements IdentifiesObjects, IdentityCanBeCompared
 {
     /**
      * @param mixed $signature

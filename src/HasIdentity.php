@@ -5,7 +5,7 @@ namespace Ident;
 /**
  * Interface HasIdentity
  */
-interface HasIdentity extends ObjectCanBeCompared
+interface HasIdentity
 {
     /**
      * @return IdentifiesObjects
