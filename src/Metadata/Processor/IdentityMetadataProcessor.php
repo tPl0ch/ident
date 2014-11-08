@@ -4,7 +4,7 @@ namespace Ident\Metadata\Processor;
 
 use Ident\CreatesIdentities;
 use Ident\IdentifiesObjects;
-use Ident\MapsClassToIdentity;
+use Ident\MapsAliasToIdentity;
 use Ident\Metadata\PropertyMetadata;
 use Ident\ServiceLocatorInterface;
 use Metadata\MetadataFactoryInterface;
@@ -25,19 +25,19 @@ class IdentityMetadataProcessor implements CreatesIdentities
     protected $metadataFactory;
 
     /**
-     * @var MapsClassToIdentity
+     * @var MapsAliasToIdentity
      */
     protected $mapper;
 
     /**
      * @param MetadataFactoryInterface $metadataFactory
      * @param ServiceLocatorInterface  $serviceLocator
-     * @param MapsClassToIdentity      $mapper
+     * @param MapsAliasToIdentity      $mapper
      */
     public function __construct(
         MetadataFactoryInterface $metadataFactory,
         ServiceLocatorInterface $serviceLocator,
-        MapsClassToIdentity $mapper
+        MapsAliasToIdentity $mapper
     ) {
         $this->metadataFactory = $metadataFactory;
         $this->serviceLocator = $serviceLocator;

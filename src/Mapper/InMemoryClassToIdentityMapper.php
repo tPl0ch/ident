@@ -3,12 +3,12 @@
 namespace Ident\Mapper;
 
 use Ident\Exception\IdentExceptions;
-use Ident\MapsClassToIdentity;
+use Ident\MapsAliasToIdentity;
 
 /**
  * Class InMemoryClassToIdentityMapper
  */
-class InMemoryClassToIdentityMapper implements MapsClassToIdentity
+class InMemoryClassToIdentityMapper implements MapsAliasToIdentity
 {
     /**
      * @var array

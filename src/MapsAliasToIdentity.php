@@ -3,9 +3,9 @@
 namespace Ident;
 
 /**
- * Interface MapsClassToIdentity
+ * Interface MapsAliasToIdentity
  */
-interface MapsClassToIdentity
+interface MapsAliasToIdentity
 {
     /**
      * @param string $className
