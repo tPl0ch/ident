@@ -50,13 +50,14 @@ class IdentitySubscriber implements EventSubscriber
      * @param LifecycleEventArgs $args
      */
     public function postLoad(LifecycleEventArgs $args) {
-        $this->process($args);
+        $this->process($args, true);
     }
 
     /**
      * @param LifecycleEventArgs $args
+     * @param boolean            $convertIdentifiers
      */
-    public function process(LifecycleEventArgs $args)
+    public function process(LifecycleEventArgs $args, $convertIdentifiers = false)
     {
         $object = $args->getObject();
 
@@ -64,6 +65,6 @@ class IdentitySubscriber implements EventSubscriber
             return;
         }
 
-        $this->processor->processIdentities($args->getObject());
+        $this->processor->processIdentities($object, $convertIdentifiers);
     }
 }

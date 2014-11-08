@@ -104,7 +104,7 @@ class Order implements HasIdentity
     }
 
     /**
-     * @return string
+     * @return \Ident\IdentifiesObjects
      */
     public function getApplicationId()
     {
@@ -112,7 +112,7 @@ class Order implements HasIdentity
     }
 
     /**
-     * @return string
+     * @return \Ident\IdentifiesObjects
      */
     public function getCorrelationId()
     {

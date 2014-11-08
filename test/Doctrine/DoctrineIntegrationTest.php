@@ -2,7 +2,6 @@
 
 namespace Ident\Test\Doctrine;
 
-use Doctrine\ORM\Tools\SchemaTool;
 use Ident\Doctrine\Subscriber\IdentitySubscriber;
 use Ident\Test\AbstractIdentTest;
 use Ident\Test\Stubs\Order;
@@ -69,10 +68,17 @@ class DoctrineIntegrationTest extends AbstractIdentTest
         $this->manager->persist($this->order);
         $this->manager->flush();
 
+        $identifier = $this->order->getIdentifier();
+        $correlationId = $this->order->getCorrelationId();
+        $applicationId = $this->order->getApplicationId();
+
+        $this->manager->detach($this->order);
+        unset($this->order);
+
         /** @var \Ident\Test\Stubs\Order $persistedOrder */
         $persistedOrder = $this->manager->find(
-            get_class($this->order),
-            $this->order->getIdentifier()
+            'Ident\Test\Stubs\Order',
+            $identifier
         );
 
         $this->assertInstanceOf(
@@ -80,14 +86,34 @@ class DoctrineIntegrationTest extends AbstractIdentTest
             $persistedOrder->getIdentifier()
         );
 
+        $this->assertTrue(
+            $identifier->equals($persistedOrder->getIdentifier())
+        );
+
         $this->assertInstanceOf(
             'Ident\Identifiers\StringIdentifier',
             $persistedOrder->getApplicationId()
+        );
+
+        $this->assertTrue(
+            $applicationId->equals($persistedOrder->getApplicationId())
         );
 
         $this->assertInstanceOf(
             'Ident\Identifiers\StringIdentifier',
             $persistedOrder->getCorrelationId()
         );
+
+        $this->assertTrue(
+            $correlationId->equals($persistedOrder->getCorrelationId())
+        );
+    }
+
+    protected function tearDown()
+    {
+        if (isset($this->order)) {
+            $this->manager->detach($this->order);
+            unset($this->order);
+        }
     }
 }
