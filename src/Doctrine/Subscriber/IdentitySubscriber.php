@@ -5,8 +5,8 @@ namespace Ident\Doctrine\Subscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Ident\CreatesIdentities;
 use Ident\HasIdentity;
-use Ident\Metadata\Processor\IdentityMetadataProcessor;
 
 /**
  * Class IdentitySubscriber
@@ -14,14 +14,14 @@ use Ident\Metadata\Processor\IdentityMetadataProcessor;
 class IdentitySubscriber implements EventSubscriber
 {
     /**
-     * @var IdentityMetadataProcessor
+     * @var CreatesIdentities
      */
     protected $processor;
 
     /**
-     * @param IdentityMetadataProcessor $processor
+     * @param CreatesIdentities $processor
      */
-    public function __construct(IdentityMetadataProcessor $processor)
+    public function __construct(CreatesIdentities $processor)
     {
         $this->processor = $processor;
     }
